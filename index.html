@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/weui.min.css">
+
+</head>
+<body>
+<div class="page__bd page__bd_spacing">
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="alert">alert</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="actionSheet">actionSheet</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="confirm">confirm</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="dialog">dialog</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="gallery">gallery</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="loading">loading</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="picker">picker</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="slider">slider</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="toast">toast</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="topTips">topTips</a>
+    <a href="javascript:;" class="weui-btn weui-btn_default" id="uploader">uploader</a>
+</div>
+</body>
+
+<script src="js/weui.min.js"></script>
+<script src="js/zepto.min.js"></script>
+
+
+<script>
+
+/*==========================alert=============================*/
+    $("#alert").click(function(){
+        var alertDom = weui.alert('正文',{
+            title:"标题",
+            className:"box",
+            buttons:[{
+                label:"确定123",
+                type:"default",
+                onClick: function(){
+                    console.log($(this).html())
+                }
+            }]
+        });
+    });
+/*==========================actionSheet=============================*/
+
+
+    $("#actionSheet").click(function(){
+        weui.actionSheet([    //上层的选择内容
+            {
+                label: '233',
+                onClick: function () {
+                    console.log($(this).html());
+                }
+            },{
+                label: '其他',
+                onClick: function () {
+                    console.log($(this).html());
+                }
+            }
+        ], [   //用于下层的按键
+            {
+                label: '取消',
+                onClick: function () {
+                    console.log($(this).html());
+                }
+            }
+        ], {
+            className: 'classname'   //包括整个弹窗的class名
+        });
+    });
+
+
+/*==========================confirmt=============================*/
+
+
+    $("#confirm").click(function(){
+        weui.confirm('正文', {
+            title: '标题',
+            className: 'classname',   //包括整个弹窗的class名
+            buttons: [{     //选项的按钮
+                label: 'NO',
+                type: 'default',   //按钮的样式
+                onClick: function(){ console.log('no') }
+            }, {
+                label: 'YES',
+                type: 'primary',
+                onClick: function(){ console.log('yes') }
+            }]
+        });
+    });
+
+
+/*==========================dialog=============================*/
+
+
+    $("#dialog").click(function(){
+        var $dialog = weui.dialog({
+            title: 'dialog标题',
+            content: 'dialog内容',
+            className: 'custom-classname',
+            buttons: [{
+                label: '取消',
+                type: 'default',
+                onClick: function () { alert('取消') }
+            }, {
+                label: '确定',
+                type: 'primary',
+                onClick: function () { alert('确定') }
+            }]
+        });
+/*        $dialog.hide(function(){   //关闭+回调
+            console.log('被关掉了');
+        });*/
+    });
+
+
+
+/*==========================gallery=============================*/
+
+
+    $("#gallery").click(function(){
+        var gallery = weui.gallery("1.jpg", {
+            className: 'custom-classname',
+            onDelete: function(){
+                weui.alert('确定删除图片？',{
+                    buttons:[{
+                        label:"确定",
+                        type:"default",
+                        onClick: function(){
+                            gallery.hide(function() {   //注意和之前定义的相同
+                                console.log('`gallery` has been hidden');
+                            });
+                        }
+                    }]
+                });
+            }
+        });
+    });
+
+
+
+/*==========================loading=============================*/
+
+
+    $("#loading").click(function(){
+        var loading = weui.loading('loading', {
+            className: 'custom-classname'
+        });
+        setTimeout(function () {
+            loading.hide(function() {
+                console.log('`loading` has been hidden');
+            });
+        }, 3000);
+
+    });
+
+
+
+
+
+/*==========================picker=============================*/
+
+
+    $("#picker").click(function(){
+        weui.picker([
+            {
+                label: '飞机票',
+                value: 0,
+                children: [
+                    {
+                        label: '经济舱',
+                        value: 0
+                    },
+                    {
+                        label: '商务舱',
+                        value: 1
+                    }
+                ]
+            },
+            {
+                label: '火车票',
+                value: 1,
+                children: [
+                    {
+                        label: '卧铺',
+                        value: 0,
+                        disabled: true // 不可用
+                    },
+                    {
+                        label: '坐票',
+                        value: 1
+                    },
+                    {
+                        label: '站票',
+                        value: 2
+                    }
+                ]
+            }
+        ], {
+            className: 'custom-classname',
+            defaultValue: [0, 0],  //默认选项的value数组, 如 [1991, 6, 9]
+            onChange: function (result) {   //选项改变时候的事件
+                //console.log(result)
+            },
+            onConfirm: function (result) {  //点击确定的事件
+                console.log(result);
+            },
+            id: 'doubleLinePicker'
+        });
+    });
+
+
+
+/*==========================slider=============================*/
+
+
+    $("#slider").click(function(){
+        weui.slider('#sliderStep', {
+            step: 10,
+            defaultValue: 40,
+            onChange: function(percent){
+                console.log(percent);
+            }
+        });
+    });
+
+
+/*==========================toast=============================*/
+
+
+    $("#toast").click(function(){
+        weui.toast('操作成功', 3000);
+        weui.toast('操作成功', {
+            duration: 3000,
+            className: 'custom-classname',
+            callback: function(){ console.log('close') }
+        });
+
+    });
+/*==========================topTips=============================*/
+
+
+    $("#topTips").click(function(){
+        weui.topTips('请填写正确的字段', {
+            duration: 3000,   //多少时间后消失
+            className: 'custom-classname',
+            callback: function(){ console.log('close') }  //消失后的回调
+        });
+    });
+
+
+/*==========================uploader=============================*/
+
+
+    $("#uploader").click(function(){
+
+        //uploader(selector, options) 	上传组件的selector+配置项
+        var uploadCount = 0;
+        weui.uploader('#uploader', {
+            url: 'http://localhost:8081',   //上传的url，返回值需要使用json格式
+            auto: true,  //设置为true后，不需要手动调用上传，有文件选择即开始上传。用this.upload()来上传
+            type: 'file',   //上传类型, file为文件上传; base64为以base64上传
+            fileVal: 'fileVal',  //文件上传域的name
+            compress: {       //	压缩配置, false则不压缩
+                width: 1600,
+                height: 1600,
+                quality: .8
+            },
+            onBeforeQueued: function(files) {  //文件添加前的回调，return false则不添加
+                // `this` 是轮询到的文件, `files` 是所有文件
+
+                if(["image/jpg", "image/jpeg", "image/png", "image/gif"].indexOf(this.type) < 0){
+                    weui.alert('请上传图片');
+                    return false; // 阻止文件添加
+                }
+                if(this.size > 10 * 1024 * 1024){
+                    weui.alert('请上传不超过10M的图片');
+                    return false;
+                }
+                if (files.length > 5) { // 防止一下子选择过多文件
+                    weui.alert('最多只能上传5张图片，请重新选择');
+                    return false;
+                }
+                if (uploadCount + 1 > 5) {
+                    weui.alert('最多只能上传5张图片');
+                    return false;
+                }
+
+                ++uploadCount;
+
+                // return true; // 阻止默认行为，不插入预览图的框架
+            },
+            onQueued: function(){   //文件添加成功的回调
+                console.log(this);
+
+                // console.log(this.status); // 文件的状态：'ready', 'progress', 'success', 'fail'
+                // console.log(this.base64); // 如果是base64上传，file.base64可以获得文件的base64
+
+                // this.upload(); // 如果是手动上传，这里可以通过调用upload来实现；也可以用它来实现重传。
+                // this.stop(); // 中断上传
+
+                // return true; // 阻止默认行为，不显示预览图的图像
+            },
+            onBeforeSend: function(data, headers){   //文件上传前调用
+                console.log(this, data, headers);
+                // $.extend(data, { test: 1 }); // 可以扩展此对象来控制上传参数
+                // $.extend(headers, { Origin: 'http://127.0.0.1' }); // 可以扩展此对象来控制上传头部
+
+                // return false; // 阻止文件上传
+            },
+            onProgress: function(procent){  //上传进度的回调
+                console.log(this, procent);
+                // return true; // 阻止默认行为，不使用默认的进度显示
+            },
+            onSuccess: function (ret) {    //上传成功的回调
+                console.log(this, ret);
+                // return true; // 阻止默认行为，不使用默认的成功态
+            },
+            onError: function(err){    //上传失败的回调
+                console.log(this, err);
+                // return true; // 阻止默认行为，不使用默认的失败态
+            }
+        });
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>
